@@ -2,23 +2,22 @@
 
 static void	do_stuff(char *buf, FILE *fp, png_structp png, png_infop info)
 {
-	png_byte	**png_rows;
+	static png_byte	**png_rows;
 	int			y;
 
-	png_rows = png_malloc(png, WIN_H * sizeof(png_byte *));
+	if (!png_rows)
+	{
+		png_rows = png_malloc(png, WIN_H * sizeof(png_byte *));
+		y = -1;
+		while (++y < WIN_H)
+			png_rows[y] = png_malloc(png, WIN_W * 4);
+	}
 	y = -1;
 	while (++y < WIN_H)
-	{
-		png_rows[y] = png_malloc(png, WIN_W * 4);
 		memmove(png_rows[y], buf + y * WIN_W * 4, WIN_W * 4);
-	}
 	png_init_io(png, fp);
 	png_set_rows(png, info, png_rows);
 	png_write_png(png, info, PNG_TRANSFORM_BGR, NULL);
-	y = -1;
-	while (++y < WIN_H)
-		png_free(png, png_rows[y]);
-	png_free(png, png_rows);
 }
 
 static void	save_img_to_file(char *buf, char *path)
@@ -35,6 +34,7 @@ static void	save_img_to_file(char *buf, char *path)
 		PNG_COMPRESSION_TYPE_DEFAULT,
 		PNG_FILTER_TYPE_DEFAULT);
 	do_stuff(buf, fp, png, info);
+	png_destroy_write_struct(&png, &info);
 }
 
 static char	*get_dir(void)
