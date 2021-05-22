@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_buffer.c                                    :+:      :+:    :+:   */
+/*   pf_handle_buffer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lkallio <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lkallio <lkallio@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 12:39:07 by lkallio           #+#    #+#             */
-/*   Updated: 2020/02/14 12:39:09 by lkallio          ###   ########.fr       */
+/*   Updated: 2021/05/21 14:46:59 by lkallio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	handle_buffer(t_pf *pf, char ins)
 {
 	if (pf->buf_idx == 1024)
 	{
-		write(1, pf->buf, 1024);
+		if (pf->is_sprintf)
+			memmove(pf->dst, pf->buf, 1024);
+		else
+			write(1, pf->buf, 1024);
 		pf->n += 1024;
 		pf->buf_idx = 0;
 	}

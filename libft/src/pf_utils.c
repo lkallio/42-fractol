@@ -6,7 +6,7 @@
 /*   By: lkallio <lkallio@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:50:50 by lkallio           #+#    #+#             */
-/*   Updated: 2021/04/14 16:17:03 by lkallio          ###   ########.fr       */
+/*   Updated: 2021/05/21 15:06:47 by lkallio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ int	pf_atoi(t_pf *pf, int *i, int ret)
 		return (pf_atoi(pf, i, ret));
 	}
 	return (ret);
+}
+
+int	pf_width(t_pf *pf, int *i, va_list ap)
+{
+	if (pf->format[(*i)] == '*' && ++(*i))
+		return (va_arg(ap, int));
+	return (pf_atoi(pf, i, 0));
 }

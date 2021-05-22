@@ -22,17 +22,18 @@ UNSETCOLOR = \033[0m
 all: $(NAME)
 
 notify:
-	@[ -d obj ] || mkdir obj
-	@printf "$(SETCYAN)Updating object files...$(UNSETCOLOR)\n"
+	@[ -d obj ] ||  (mkdir -p $(OBJDIR) && printf "Created directory \e[38;5;136m$(OBJDIR)\e[37m\n\n")
 
 $(OBJDIR)%.o: $(SRCDIR)%.c | notify
 	@gcc -g $(FLAGS) -c $< -I $(INC) -I $(INCLIBFT) -I $(INCMLX) -o $@
+	@printf "\e[F\e[JCompiling $<\nWaiting for compilation..."
 
 $(NAME): $(addprefix $(OBJDIR), $(OBJ))
-	@printf "$(SETPINK)Making libft...\n$(UNSETCOLOR)"
+	@printf "\e[F\e[JCompiled \e[38;5;111m$(subst obj/,,$?)\e[37m\n\007Making libft...\n"
 	@make -C libft
+	@printf "\e[F\e[JLibft done!\n"
 	@gcc -g $^ $(LIBFT) $(FLAGS) -Lminilibx -lmlx -lX11 -lXext -lpng -o $(NAME)
-	@printf "$(SETASD)$(SETGREEN)fractol compiled.\n$(UNSETCOLOR)"
+	@printf "Compiled binary \e[38;5;37m$(NAME)\e[37m\n"
 
 clean:
 	@make clean -C libft

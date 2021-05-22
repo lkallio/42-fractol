@@ -6,7 +6,7 @@
 /*   By: lkallio <lkallio@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 13:17:51 by lkallio           #+#    #+#             */
-/*   Updated: 2021/05/02 20:39:14 by lkallio          ###   ########.fr       */
+/*   Updated: 2021/05/22 13:38:19 by lkallio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	fract_loop(void)
 
 void	put_image(t_window *win)
 {
-	static t_master *master;
+	static t_master	*master;
 
 	if (!master)
 		master = get_master();

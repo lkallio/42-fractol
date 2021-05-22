@@ -6,7 +6,7 @@
 /*   By: lkallio <lkallio@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:50:31 by lkallio           #+#    #+#             */
-/*   Updated: 2021/04/14 17:00:15 by lkallio          ###   ########.fr       */
+/*   Updated: 2021/05/21 15:26:59 by lkallio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ static void	parse_options(t_pf *pf, int *i, va_list ap, int cont)
 	}
 	if (((pf->format[(*i)] >= '0' && pf->format[(*i)] <= '9')
 			|| pf->format[(*i)] == '*') && ft_intass(&cont, 1))
-		pf->dt.width = ft_itrn(pf->format[(*i)] == '*' && ++(*i),
-				va_arg(ap, int), pf_atoi(pf, i, 0));
+		pf->dt.width = pf_width(pf, i, ap);
 	if (pf->format[(*i)] == '.' && ++(*i) && ft_intass(&cont, 1))
 		pf->dt.prec = pf_atoi(pf, i, 0);
 	if (ft_intass(&ret, ft_nstrchr("hlLzjt", pf->format[(*i)])) != -1)
@@ -77,7 +76,7 @@ static void	parse_argument(t_pf *pf, int *i, va_list ap)
 	}
 }
 
-static int	parse_quoted(t_pf *pf, va_list ap)
+int	parse_quoted(t_pf *pf, va_list ap)
 {
 	int		i;
 	int		j;
@@ -94,7 +93,10 @@ static int	parse_quoted(t_pf *pf, va_list ap)
 		}
 		handle_buffer(pf, pf->format[i++]);
 	}
-	write(1, pf->buf, pf->buf_idx);
+	if (pf->is_sprintf)
+		ft_strncpy(pf->dst, pf->buf, pf->buf_idx + 1);
+	else
+		write(1, pf->buf, pf->buf_idx);
 	return (1);
 }
 

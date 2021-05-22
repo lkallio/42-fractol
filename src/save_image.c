@@ -51,7 +51,7 @@ void	make_image(t_window *win)
 {
 	char		file_path[1024];
 
-	sprintf(file_path, "%s/%s_%d.png", get_dir(),
+	ft_sprintf(file_path, "%s/%s_%d.png", get_dir(),
 		win->name, (int)time(NULL) % 10000);
 	save_img_to_file(win->i.buf, file_path);
 }
@@ -64,12 +64,12 @@ void	record(t_window *win)
 	if (win->new_dir && win->new_dir--)
 	{
 		win->images_created = 0;
-		sprintf(file_path, "%s/%s_recording_%d", get_dir(),
+		ft_sprintf(file_path, "%s/%s_recording_%d", get_dir(),
 			win->name, (int)time(NULL) % 10000);
 		dir_name[win->type] = ft_strdup(file_path);
 		mkdir(file_path, 0700);
 	}
-	sprintf(file_path, "%s/%03d.png", dir_name[win->type],
+	ft_sprintf(file_path, "%s/%03d.png", dir_name[win->type],
 		win->images_created++);
 	save_img_to_file(win->i.buf, file_path);
 }

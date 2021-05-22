@@ -6,13 +6,13 @@
 /*   By: lkallio <lkallio@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 13:30:00 by lkallio           #+#    #+#             */
-/*   Updated: 2021/05/02 21:02:27 by lkallio          ###   ########.fr       */
+/*   Updated: 2021/05/22 13:38:02 by lkallio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void print_text_cont(t_master *master)
+static void	print_text_cont(t_master *master)
 {
 	mlx_string_put(master->m, master->cur->p,
 		WIN_W / 2 - 100, WIN_H / 4 + 140, 0xffccdd,
